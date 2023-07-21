@@ -1,0 +1,17 @@
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\MarketConsole.exe
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\MarketConsole.deps.json
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\MarketConsole.runtimeconfig.json
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\MarketConsole.dll
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\MarketConsole.pdb
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.csproj.AssemblyReference.cache
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.AssemblyInfoInputs.cache
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.AssemblyInfo.cs
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.csproj.CoreCompileInputs.cache
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.dll
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\refint\MarketConsole.dll
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.pdb
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.genruntimeconfig.cache
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\ref\MarketConsole.dll
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\bin\Debug\net6.0\ConsoleTables.dll
+C:\Users\vcebr\OneDrive\Desktop\Market_Console\MarketConsole\MarketConsole\obj\Debug\net6.0\MarketConsole.csproj.CopyComplete
