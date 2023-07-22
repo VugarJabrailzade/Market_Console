@@ -1,6 +1,6 @@
-﻿using MarketConsole.HelpMenu;
+﻿using MarketManagement.HelpMenu;
 
-namespace MarketConsole
+namespace MarketManagement
 {
     internal class Program
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarketConsole.HelpMenu
+namespace MarketManagement.HelpMenu
 {
     public class SubMenu
     {
