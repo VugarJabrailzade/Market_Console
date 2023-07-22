@@ -11,12 +11,12 @@ namespace MarketConsole.Data.Models
     public class Product : BaseEntity
     {
         private static int count = 0;
-        public Product(string name,decimal price,ProductCategory category,int count)
+        public Product(string name,decimal price,ProductCategory category,int counts)
         {
             Name = name;
             Price = price;
             Category = category;
-            Count = count;
+            Counts = counts;
 
             ID = count;
             count++;
@@ -24,7 +24,7 @@ namespace MarketConsole.Data.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public ProductCategory Category { get; set; } // for saving items by category
-        public int Count { get; set; }
+        public int Counts { get; set; }
     }
 
 }

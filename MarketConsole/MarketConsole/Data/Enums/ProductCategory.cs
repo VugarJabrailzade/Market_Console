@@ -9,13 +9,13 @@ namespace MarketConsole.Data.Enums
     public enum  ProductCategory
     {
         Foods,
-        KitchenItems,
-        BathroomItems,
-        FurnitureItems,
-        GardenItems,
-        DecorativeItems,
-        ElectronicItems,
-        CarItems
+        Kitchen,
+        Bathroom,
+        Furniture,
+        Garden,
+        Decorative,
+        Electronic,
+        Car
 
     }
 }
