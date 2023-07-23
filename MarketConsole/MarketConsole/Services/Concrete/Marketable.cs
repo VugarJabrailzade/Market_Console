@@ -14,6 +14,10 @@ namespace MarketConsole.Services.Concrete
         private List<Product> products;
         
 
+        public List<Product> GetProducts()
+        {
+            return products;
+        }
         public Marketable()
         {
             products = new();
@@ -33,13 +37,30 @@ namespace MarketConsole.Services.Concrete
 
         public void DeleteProduct(int ID)
         {
-            throw new NotImplementedException();
+            if (ID < 0) throw new ArgumentOutOfRangeException("ID can't be negative!");
+            var existingproduct = products.FirstOrDefault(p => p.ID == ID);
+
+            if (existingproduct == null) throw new ArgumentNullException("Not found!");
+
+            products = products.Where(p => p.ID != ID).ToList();
         }
 
-        public List<Product> GetProducts()
+        public void UpdateProduct(int ID, string name, decimal price, ProductCategory category,int counts)
         {
-            return products;
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name is null!");
+            if (price < 0) throw new ArgumentOutOfRangeException("Price is negative!");
+            if (counts < 0) throw new ArgumentNullException("Counts can't be negative!");
+
+            var existingproduct = products.FirstOrDefault(p => p.ID == ID);
+            if (existingproduct == null) throw new Exception("Student not found!");
+
+            existingproduct.Name = name;
+            existingproduct.Price = price;
+            existingproduct.Category = category;
+            existingproduct.Counts = counts;
+
         }
+
     }
    
 }

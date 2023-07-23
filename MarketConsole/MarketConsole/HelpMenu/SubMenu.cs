@@ -47,8 +47,10 @@ namespace MarketManagement.HelpMenu
                         ProductsHandling.AddNewProduct();
                         break;
                     case 3:
-                        break;
+                        ProductsHandling.UpdateProduct();
+                        break;                      
                     case 4:
+                        ProductsHandling.RemoveProduct();
                         break;
                     case 5:
                         break;

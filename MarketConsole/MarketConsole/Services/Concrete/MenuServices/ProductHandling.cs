@@ -73,11 +73,30 @@ namespace MarketConsole.Services.Concrete.MenuServices
         {
             try
             {
+                Console.WriteLine("Please add ID for change product:");
+                int numberID = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Please add  new product name:");
+                string productName = Console.ReadLine();
+
+                Console.WriteLine("Please add new price:");
+                decimal productPrice = decimal.Parse(Console.ReadLine());
+
+                Console.WriteLine("Please add new category of product:");
+                ProductCategory productCategory = (ProductCategory)Enum.Parse(typeof(ProductCategory), Console.ReadLine(), true);
+
+                Console.WriteLine("Please add new count of product:");
+                int productCount = int.Parse(Console.ReadLine());
+
+                 marketable.UpdateProduct(numberID, productName, productPrice, productCategory, productCount);
+
+                Console.WriteLine($"Product uptade is succesfully!");
+
 
             }
+
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error! {ex.Message}");
             }
         }
@@ -85,6 +104,12 @@ namespace MarketConsole.Services.Concrete.MenuServices
         {
             try
             {
+                Console.WriteLine("Please enter product ID for deleting product!");
+                int newID = int.Parse(Console.ReadLine());
+
+                marketable.DeleteProduct(newID);
+
+                Console.WriteLine("Deleting produtc was succesfully!");
 
             }
             catch (Exception ex)
