@@ -53,12 +53,16 @@ namespace MarketManagement.HelpMenu
                         ProductsHandling.RemoveProduct();
                         break;
                     case 5:
+                        ProductsHandling.ShowCategoryByProduct();
                         break;
                     case 6:
+                        ProductsHandling.ShowProductByPriceRange();
                         break;
                     case 7:
+                        ProductsHandling.FindProductByName();
                         break;
                     case 0:
+                        Console.WriteLine("Goodbye");
                         break;
                     default:
                         Console.WriteLine("No such option!");

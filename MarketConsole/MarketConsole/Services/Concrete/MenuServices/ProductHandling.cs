@@ -13,6 +13,8 @@ namespace MarketConsole.Services.Concrete.MenuServices
     public class ProductsHandling : BaseEntity
     {
         private static Marketable marketable = new Marketable();
+        private static object table;
+
         public static void ShowProducts()
         {
 
@@ -120,14 +122,72 @@ namespace MarketConsole.Services.Concrete.MenuServices
         }
         public static void ShowCategoryByProduct()
         {
+            Console.WriteLine("You can see all product category in the below:");
+            Console.WriteLine(ProductCategory.Foods);
+            Console.WriteLine(ProductCategory.Kitchen);
+            Console.WriteLine(ProductCategory.Bathroom);
+            Console.WriteLine(ProductCategory.Furniture);
+            Console.WriteLine(ProductCategory.Garden);
+            Console.WriteLine(ProductCategory.Decorative);
+            Console.WriteLine(ProductCategory.Electronic);
+            Console.WriteLine(ProductCategory.Car);
+           
 
         }
-        public static void ShoProductByPriceRange()
+        public static void ShowProductByPriceRange()
         {
+            try
+            {
+                Console.WriteLine("Enter minimum price for searching products:");
+                int minPrice = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter maximum price for searching products:");
+                int maxPrice = int.Parse(Console.ReadLine());
+
+                 var priceRange = marketable.ShowProductByPriceRange(minPrice, maxPrice);
+                if (priceRange.Count == 0)
+                {
+                    Console.WriteLine("No products found!");
+                }
+
+                foreach (var price in priceRange)
+                {
+                    Console.WriteLine($"ID: {price.ID} | Name: {price.Name} | Price: {price.Price} | Category: {price.Category} | Count: {price.Counts}");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! {ex.Message}");
+            }
 
         }
         public static void FindProductByName()
         {
+            try
+            {
+                Console.WriteLine("Please enter product name for finding:");
+                string name = Console.ReadLine();
+
+                var searchName = marketable.FindProductByName(name);
+                if (searchName.Count == 0)
+                {
+                    Console.WriteLine("Product not found!");
+                    return;
+                }
+               
+                foreach (var item in searchName)
+                {
+                    Console.WriteLine($"ID: {item.ID} | Name: {item.Name} | Price: {item.Price} | Category: {item.Category} | Count: {item.Counts}");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! {ex.Message}");
+                
+            }
 
         }
     }

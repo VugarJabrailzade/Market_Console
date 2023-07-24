@@ -61,6 +61,29 @@ namespace MarketConsole.Services.Concrete
 
         }
 
+        public List<Product> ShowCategoryByProduct(ProductCategory category)
+        {
+            if(category != null ) throw new ArgumentNullException("Category can't be null!");
+
+            var searchCategory = products.Where(x => x.Category == category).ToList();
+            return searchCategory;
+        }
+
+        public List<Product> FindProductByName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("Name can't be empty!");
+            var searchName = products.Where(x =>x.Name == name).ToList();
+            return searchName;
+
+        }
+
+        public List<Product> ShowProductByPriceRange(int minPrice, int maxPrice)
+        {
+            if ( minPrice < 0) throw new Exception("Minimum price can't less than 0");
+            if (minPrice > maxPrice) throw new Exception("Minimum price can't be more than maximum price!");
+
+            return products.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
+        }
     }
    
 }
