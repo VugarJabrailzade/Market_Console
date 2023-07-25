@@ -2,6 +2,7 @@
 using MarketConsole.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,15 @@ namespace MarketConsole.Data.Models
         public decimal Price { get; set; }
         public ProductCategory Category { get; set; } // for saving items by category
         public int Counts { get; set; }
+        public Product(string name, decimal price,ProductCategory category,int counts,int iD)
+        {
+            Name = name;
+            Price = price;
+            Category = category;
+            Counts = counts;
+            ID = iD;
+
+        }
     }
 
 }

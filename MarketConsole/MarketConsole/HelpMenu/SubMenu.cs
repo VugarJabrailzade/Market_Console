@@ -1,6 +1,6 @@
 ﻿using MarketConsole.Data.Models;
 using MarketConsole.Services.Concrete;
-using MarketConsole.Services.Concrete.MenuServices;
+using MarketConsole.Services.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,28 +41,28 @@ namespace MarketManagement.HelpMenu
                 switch (option)
                 {
                     case 1:
-                        ProductsHandling.ShowProducts();
+                        MenuService.ShowProducts();
                         break;
                     case 2:
-                        ProductsHandling.AddNewProduct();
+                        MenuService.AddNewProduct();
                         break;
                     case 3:
-                        ProductsHandling.UpdateProduct();
+                        MenuService.UpdateProduct();
                         break;                      
                     case 4:
-                        ProductsHandling.RemoveProduct();
+                        MenuService.RemoveProduct();
                         break;
                     case 5:
-                        ProductsHandling.ShowCategoryByProduct();
+                        MenuService.ShowCategoryByProduct();
                         break;
                     case 6:
-                        ProductsHandling.ShowProductByPriceRange();
+                        MenuService.ShowProductByPriceRange();
                         break;
                     case 7:
-                        ProductsHandling.FindProductByName();
+                        MenuService.FindProductByName();
                         break;
                     case 0:
-                        Console.WriteLine("Goodbye");
+                        Console.WriteLine("Bye");
                         break;
                     default:
                         Console.WriteLine("No such option!");
@@ -73,10 +73,6 @@ namespace MarketManagement.HelpMenu
 
         }
 
-        private static object GetProductHandling()
-        {
-            return ProductHandling;
-        }
 
         public static void SalesHandling()
         {
@@ -87,9 +83,9 @@ namespace MarketManagement.HelpMenu
             {
 
                 Console.WriteLine("1. Show sales.");
-                Console.WriteLine("2. Return purchase.");
+                Console.WriteLine("2. Add new sales.");
                 Console.WriteLine("3. Remove sales.");
-                Console.WriteLine("4. Add new sales.");
+                Console.WriteLine("4. Return purchase.");
                 Console.WriteLine("5. Show sales by date.");
                 Console.WriteLine("6. Show sales by amount range.");
                 Console.WriteLine("7. Search by sale date.");
@@ -109,8 +105,10 @@ namespace MarketManagement.HelpMenu
                 switch (option)
                 {
                     case 1:
+                        MenuService.ShowSales();
                         break;
                     case 2:
+                        MenuService.AddNewSales();
                         break;
                     case 3:
                         break;

@@ -1,33 +1,44 @@
 ﻿using MarketConsole.Data.Enums;
 using MarketConsole.Data.Models;
 using MarketConsole.Services.Abstract;
+using MarketConsole.Services.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MarketConsole.Services.Concrete
 {
-    internal class Marketable : IMarkettable
+    internal class MarketService : IMarkettable
     {
         private List<Product> products;
-        
+        private List<Sale> sales;
+        private List<SaleItem> saleItems;
 
         public List<Product> GetProducts()
         {
             return products;
         }
-        public Marketable()
+        public List<Sale> GetSale()
+        {
+            return sales;
+        }
+        public MarketService()
         {
             products = new();
+            sales = new();
+            saleItems = new();
         }
+        public void ShowProducts() { }
         public int AddProduct(string name, decimal price, ProductCategory category, int counts)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name is null!");
             if (price < 0) throw new ArgumentOutOfRangeException("Price is negative!");
             if (counts < 0) throw new ArgumentOutOfRangeException("Count can't be less than 0!");
-
+            
             var product = new Product(name, price, category, counts);
 
             products.Add(product);
@@ -63,9 +74,9 @@ namespace MarketConsole.Services.Concrete
 
         public List<Product> ShowCategoryByProduct(ProductCategory category)
         {
-            if(category != null ) throw new ArgumentNullException("Category can't be null!");
-
-            var searchCategory = products.Where(x => x.Category == category).ToList();
+            if(category == null ) throw new ArgumentNullException("Category can't be null!");
+            
+            var searchCategory = products.Where(x => x.Category == category).Select(p => new Product(p.Name,p.Price,p.Category,p.Counts,p.ID)).ToList();
             return searchCategory;
         }
 
@@ -83,6 +94,31 @@ namespace MarketConsole.Services.Concrete
             if (minPrice > maxPrice) throw new Exception("Minimum price can't be more than maximum price!");
 
             return products.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
+        }
+
+        public void ShowSales() { }
+        public int  AddNewSale(int id , int count, DateTime dateTime)
+        {
+            var product = products.Find(x => x.ID == id);
+
+            if (product != null)
+            {
+                var price = product.Price * count;
+                product.Counts -= count;
+                
+                var saleItem = new SaleItem(product, count);
+                saleItems.Add(saleItem);
+
+                var sale = new Sale(price, saleItem, dateTime);
+
+                sales.Add(sale);
+
+                
+                return product.Counts;
+            }
+
+            return 0;
+
         }
     }
    

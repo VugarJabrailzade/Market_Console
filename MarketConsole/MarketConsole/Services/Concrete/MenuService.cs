@@ -4,15 +4,16 @@ using MarketConsole.Data.Enums;
 using MarketConsole.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarketConsole.Services.Concrete.MenuServices
+namespace MarketConsole.Services.Concrete
 {
-    public class ProductsHandling : BaseEntity
+    public class MenuService : BaseEntity
     {
-        private static Marketable marketable = new Marketable();
+        private static MarketService marketable = new MarketService();
         private static object table;
 
         public static void ShowProducts()
@@ -60,15 +61,15 @@ namespace MarketConsole.Services.Concrete.MenuServices
                 var newID = marketable.AddProduct(productName, productPrice, productCategory, productCount);
 
                 Console.WriteLine($"Product with ID {newID} was created!");
-                
+
 
             }
-            
+
             catch (Exception ex)
             {
-                Console.WriteLine();
+                Console.WriteLine($"Error! {ex.Message}");
             }
-            
+
         }
 
         public static void UpdateProduct()
@@ -90,7 +91,7 @@ namespace MarketConsole.Services.Concrete.MenuServices
                 Console.WriteLine("Please add new count of product:");
                 int productCount = int.Parse(Console.ReadLine());
 
-                 marketable.UpdateProduct(numberID, productName, productPrice, productCategory, productCount);
+                marketable.UpdateProduct(numberID, productName, productPrice, productCategory, productCount);
 
                 Console.WriteLine($"Product uptade is succesfully!");
 
@@ -109,9 +110,9 @@ namespace MarketConsole.Services.Concrete.MenuServices
                 Console.WriteLine("Please enter product ID for deleting product!");
                 int newID = int.Parse(Console.ReadLine());
 
-                marketable.DeleteProduct(newID);
+                marketable.DeleteProduct(newID); // deleting  product by Id which Id giving us by user
 
-                Console.WriteLine("Deleting produtc was succesfully!");
+                Console.WriteLine("Deleting product was succesfully!");
 
             }
             catch (Exception ex)
@@ -122,17 +123,25 @@ namespace MarketConsole.Services.Concrete.MenuServices
         }
         public static void ShowCategoryByProduct()
         {
-            Console.WriteLine("You can see all product category in the below:");
-            Console.WriteLine(ProductCategory.Foods);
-            Console.WriteLine(ProductCategory.Kitchen);
-            Console.WriteLine(ProductCategory.Bathroom);
-            Console.WriteLine(ProductCategory.Furniture);
-            Console.WriteLine(ProductCategory.Garden);
-            Console.WriteLine(ProductCategory.Decorative);
-            Console.WriteLine(ProductCategory.Electronic);
-            Console.WriteLine(ProductCategory.Car);
-           
+            try
+            {
+                Console.WriteLine("You can see all product category in the below:");
+                Console.WriteLine("Categories: Foods, Kitchen, Bathroom, Furniture, Garden, Decorative, Electronic, Car.");
 
+                Console.WriteLine("\nSelect category for showing product:");
+                string categoryName = Console.ReadLine();
+
+                var res = marketable.ShowCategoryByProduct((ProductCategory)Enum.Parse(typeof(ProductCategory), categoryName, true)).ToList(); //this method calls  enums which products save inside enum categories
+
+                foreach (var item in res)
+                {
+                    Console.WriteLine($"ID: {item.ID} | Name: {item.Name} | Price: {item.Price} | Category: {item.Category} | Count: {item.Counts}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! {ex.Message}");
+            }
         }
         public static void ShowProductByPriceRange()
         {
@@ -140,11 +149,10 @@ namespace MarketConsole.Services.Concrete.MenuServices
             {
                 Console.WriteLine("Enter minimum price for searching products:");
                 int minPrice = int.Parse(Console.ReadLine());
-
                 Console.WriteLine("Enter maximum price for searching products:");
                 int maxPrice = int.Parse(Console.ReadLine());
 
-                 var priceRange = marketable.ShowProductByPriceRange(minPrice, maxPrice);
+                var priceRange = marketable.ShowProductByPriceRange(minPrice, maxPrice);
                 if (priceRange.Count == 0)
                 {
                     Console.WriteLine("No products found!");
@@ -176,7 +184,7 @@ namespace MarketConsole.Services.Concrete.MenuServices
                     Console.WriteLine("Product not found!");
                     return;
                 }
-               
+
                 foreach (var item in searchName)
                 {
                     Console.WriteLine($"ID: {item.ID} | Name: {item.Name} | Price: {item.Price} | Category: {item.Category} | Count: {item.Counts}");
@@ -186,11 +194,64 @@ namespace MarketConsole.Services.Concrete.MenuServices
             catch (Exception ex)
             {
                 Console.WriteLine($"Error! {ex.Message}");
+
+            }
+
+        }
+
+        public static void ShowSales()
+        {
+            try
+            {
+                var sales = marketable.GetSale();
+                if (sales.Count == 0)
+                {
+                    Console.WriteLine("There are no sales!");
+                    return;
+                }
+
+                var table = new ConsoleTable("ID", "Price", "Category", "Count");
+
+                foreach (var sale in sales)
+                {
+                    table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Items);
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error! {ex.Message}");
+            }
+        }
+        public static void AddNewSales()
+        {
+            try
+            {
+                Console.WriteLine("Please add product ID for  sales");
+                int salesID = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter the counts:");
+                int counts = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter date (dd/MM/yyyy):");
+                DateTime dateTime = DateTime.Parse(Console.ReadLine());
+
+                marketable.AddNewSale(salesID, counts, dateTime);
+
                 
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
             }
 
         }
     }
-  
+
 
 }
