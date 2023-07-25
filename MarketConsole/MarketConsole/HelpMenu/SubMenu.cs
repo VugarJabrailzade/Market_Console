@@ -102,13 +102,14 @@ namespace MarketManagement.HelpMenu
                     Console.WriteLine("------------------------");
                 }
 
+                
                 switch (option)
                 {
                     case 1:
                         MenuService.ShowSales();
                         break;
                     case 2:
-                        MenuService.AddNewSales();
+                        MenuService.AddNewSale();
                         break;
                     case 3:
                         break;

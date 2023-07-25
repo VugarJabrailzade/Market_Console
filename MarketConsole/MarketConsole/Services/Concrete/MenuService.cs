@@ -204,17 +204,18 @@ namespace MarketConsole.Services.Concrete
             try
             {
                 var sales = marketable.GetSale();
+               
                 if (sales.Count == 0)
                 {
                     Console.WriteLine("There are no sales!");
                     return;
                 }
 
-                var table = new ConsoleTable("ID", "Price", "Category", "Count");
+                var table = new ConsoleTable("ID", "Price", "Date", "Quantity");
 
                 foreach (var sale in sales)
                 {
-                    table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Items);
+                    table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity);
                 }
                 table.Write();
             }
@@ -224,7 +225,7 @@ namespace MarketConsole.Services.Concrete
                 Console.WriteLine($"Error! {ex.Message}");
             }
         }
-        public static void AddNewSales()
+        public static void AddNewSale()
         {
             try
             {
@@ -234,20 +235,17 @@ namespace MarketConsole.Services.Concrete
                 Console.WriteLine("Enter the counts:");
                 int counts = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("Enter date (dd/MM/yyyy):");
+                Console.WriteLine("Enter date (MM/dd/yyyy):");
                 DateTime dateTime = DateTime.Parse(Console.ReadLine());
 
-                marketable.AddNewSale(salesID, counts, dateTime);
+                 marketable.AddNewSale(salesID, counts, dateTime);
 
-                
-
-
-
+                //Console.WriteLine($"Sale with ID {newID} was created!");
 
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine($"Error! {ex.Message}");
             }
 
         }

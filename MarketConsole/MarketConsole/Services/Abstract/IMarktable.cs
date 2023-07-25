@@ -20,7 +20,8 @@ namespace MarketConsole.Services.Abstract
         public List<Product> ShowProductByPriceRange(int minPrice, int maxPrice);
 
         public List<Sale> GetSale();
-        public void ShowSales() { }
+        public void ShowSale() { }
+        public int AddNewSale(int id, int count, DateTime dateTime);
 
     }
 }

@@ -96,24 +96,26 @@ namespace MarketConsole.Services.Concrete
             return products.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
         }
 
-        public void ShowSales() { }
+        public void ShowSale() { }
         public int  AddNewSale(int id , int count, DateTime dateTime)
         {
             var product = products.Find(x => x.ID == id);
+            
+            
+            //if (dateTime < DateTime.Now) throw new Exception("Error!!!!");
+            if (count < 0) throw new Exception("Count can't be less than 0!");
 
-            if (product != null)
+            if (product != null && product.Counts >= count)
             {
                 var price = product.Price * count;
                 product.Counts -= count;
-                
+
                 var saleItem = new SaleItem(product, count);
+                var sale = new Sale(price,count,dateTime);
+
                 saleItems.Add(saleItem);
-
-                var sale = new Sale(price, saleItem, dateTime);
-
                 sales.Add(sale);
 
-                
                 return product.Counts;
             }
 
