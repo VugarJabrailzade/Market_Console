@@ -21,7 +21,7 @@ namespace MarketConsole.Services.Abstract
 
         public List<Sale> GetSale();
         public void ShowSale() { }
-        public int AddNewSale(int id, int count, DateTime dateTime);
+        public void AddNewSale(int id, int count, DateTime dateTime);
 
     }
 }

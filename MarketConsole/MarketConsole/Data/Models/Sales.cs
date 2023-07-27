@@ -20,6 +20,16 @@ namespace MarketConsole.Data.Models
             ID = count;
             count++;
         }
+        public Sale(decimal price, int quantity, DateTime dateTime, List<SaleItem> items)
+        {
+            Price = price;
+            Items = items;
+            DateTime = dateTime;
+            Quantity = quantity;
+
+            ID = count;
+            count++;
+        }
 
         public int Quantity { get; set; }
         public decimal Price { get; set; }
@@ -44,6 +54,8 @@ namespace MarketConsole.Data.Models
         {
             SalesProduct = product;
             Quantity = quantity;
+            
+
 
             ID = count;
             count++;

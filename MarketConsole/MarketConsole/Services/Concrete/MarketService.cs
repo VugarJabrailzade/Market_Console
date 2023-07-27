@@ -2,6 +2,7 @@
 using MarketConsole.Data.Models;
 using MarketConsole.Services.Abstract;
 using MarketConsole.Services.Concrete;
+using MarketManagement.HelpMenu;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -18,14 +19,18 @@ namespace MarketConsole.Services.Concrete
         private List<Sale> sales;
         private List<SaleItem> saleItems;
 
+       
+
         public List<Product> GetProducts()
         {
             return products;
         }
         public List<Sale> GetSale()
         {
+            
             return sales;
         }
+
         public MarketService()
         {
             products = new();
@@ -97,31 +102,71 @@ namespace MarketConsole.Services.Concrete
         }
 
         public void ShowSale() { }
-        public int  AddNewSale(int id , int count, DateTime dateTime)
+        public void AddNewSale(int id , int counts, DateTime dateTime)
         {
             var product = products.Find(x => x.ID == id);
-            
-            
-            //if (dateTime < DateTime.Now) throw new Exception("Error!!!!");
-            if (count < 0) throw new Exception("Count can't be less than 0!");
+            List<SaleItem> tempItems = new();
 
-            if (product != null && product.Counts >= count)
+            if (counts < 0) throw new Exception("Count can't be less than 0!");
+
+            if (product != null && product.Counts >= counts) //We call to the information contained in the product
             {
-                var price = product.Price * count;
-                product.Counts -= count;
+                
+                var price = product.Price * counts; //when we write count this variable calculated price according to count
+                product.Counts -= counts;
+                var saleItem = new SaleItem(product, counts);
+                tempItems.Add(saleItem);
+                
+                var sale = new Sale(price, counts, DateTime.Now);
+                int option;
+                do
+                {
+                    Console.WriteLine("Do u want to add one more sale item?");
+                    Console.WriteLine("1. Yes");
+                    Console.WriteLine("2. No");
 
-                var saleItem = new SaleItem(product, count);
-                var sale = new Sale(price,count,dateTime);
+                    while (!int.TryParse(Console.ReadLine(), out option))
+                    {
+                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Enter option again:");
+                    }
+                    switch (option)
+                    {
+                        case 1:
 
-                saleItems.Add(saleItem);
-                sales.Add(sale);
+                            Console.WriteLine("Please add product ID for  sales");
+                            int salesID = int.Parse(Console.ReadLine());
 
-                return product.Counts;
+                            Console.WriteLine("Enter the counts:");
+                            int countSale = int.Parse(Console.ReadLine());
+
+                            var newProduct = products.Find(x => x.ID == salesID);
+
+                            var secondPrice = product.Price * countSale;
+                            newProduct.Counts -= countSale;
+                           var neSaleItem = new SaleItem(newProduct, countSale);
+                            tempItems.Add(neSaleItem);
+                            sale = new Sale(secondPrice, countSale, DateTime.Now);
+                            break;
+                        case 2:
+                            return;
+                        default:
+                            Console.WriteLine("No such option!");
+                            break;
+                    }
+                    foreach (var res in tempItems)
+                    {
+                        sale.AddSaleItem(res);
+                    }
+                    sales.Add(sale);
+
+                } while (option != 2);
+
             }
-
-            return 0;
-
         }
+
+
+        
     }
    
 }

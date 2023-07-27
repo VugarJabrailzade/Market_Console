@@ -14,7 +14,7 @@ namespace MarketConsole.Services.Concrete
     public class MenuService : BaseEntity
     {
         private static MarketService marketable = new MarketService();
-        private static object table;
+        //private static object table;
 
         public static void ShowProducts()
         {
@@ -204,20 +204,25 @@ namespace MarketConsole.Services.Concrete
             try
             {
                 var sales = marketable.GetSale();
-               
+                
                 if (sales.Count == 0)
                 {
                     Console.WriteLine("There are no sales!");
                     return;
                 }
 
-                var table = new ConsoleTable("ID", "Price", "Date", "Quantity");
-
+                var table = new ConsoleTable("ID", "Price", "Date", "Quantity","Category");
                 foreach (var sale in sales)
                 {
-                    table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity);
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
+
+                    }
+                    table.Write();
+
                 }
-                table.Write();
+                //table.Write();
             }
             catch (Exception ex)
             {
@@ -235,12 +240,10 @@ namespace MarketConsole.Services.Concrete
                 Console.WriteLine("Enter the counts:");
                 int counts = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("Enter date (MM/dd/yyyy):");
-                DateTime dateTime = DateTime.Parse(Console.ReadLine());
+                marketable.AddNewSale(salesID, counts, DateTime.Now);
 
-                 marketable.AddNewSale(salesID, counts, dateTime);
-
-                //Console.WriteLine($"Sale with ID {newID} was created!");
+                Console.WriteLine($"Product has sold!");
+                
 
             }
             catch (Exception ex)
