@@ -88,7 +88,7 @@ namespace MarketManagement.HelpMenu
                 Console.WriteLine("4. Return purchase.");
                 Console.WriteLine("5. Show sales by date.");
                 Console.WriteLine("6. Show sales by amount range.");
-                Console.WriteLine("7. Search by sale date.");
+                Console.WriteLine("7. Showing sales on a given date.");
                 Console.WriteLine("8. Show sales by ID.");
                 Console.WriteLine("0. Back to main menu.");
                 Console.WriteLine("------------------------");
@@ -112,18 +112,24 @@ namespace MarketManagement.HelpMenu
                         MenuService.AddNewSale();
                         break;
                     case 3:
+                        MenuService.RemoveSale();
                         break;
                     case 4:
                         break;
                     case 5:
+                        MenuService.ShowSaleByDate();
                         break;
                     case 6:
+                        MenuService.ShowSaleByPriceRange();
                         break;
                     case 7:
+                        MenuService.ShowSalesInGivenOneDate();
                         break; 
                     case 8:
+                        MenuService.ShowSalesByID();
                         break;
                     case 0:
+                        Console.WriteLine("Bye!");
                         break;
                     default:
                         Console.WriteLine("No such option!");

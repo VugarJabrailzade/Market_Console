@@ -212,17 +212,17 @@ namespace MarketConsole.Services.Concrete
                 }
 
                 var table = new ConsoleTable("ID", "Price", "Date", "Quantity","Category");
+
                 foreach (var sale in sales)
                 {
                     foreach (var item in sale.Items)
                     {
-                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
-
+                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity,item.SalesProduct.Category);
+                        break;
                     }
-                    table.Write();
-
+                    
                 }
-                //table.Write();
+                table.Write();
             }
             catch (Exception ex)
             {
@@ -230,6 +230,7 @@ namespace MarketConsole.Services.Concrete
                 Console.WriteLine($"Error! {ex.Message}");
             }
         }
+        
         public static void AddNewSale()
         {
             try
@@ -252,6 +253,163 @@ namespace MarketConsole.Services.Concrete
             }
 
         }
+        public static void RemoveSale()
+        {
+            try
+            {
+                Console.WriteLine("Please enter sales ID for deleting product!");
+                int salesID = int.Parse(Console.ReadLine());
+
+                marketable.RemoveSale(salesID); 
+
+                Console.WriteLine("Deleting sales was succesfully!");
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error! {ex.Message}");
+            }
+        }
+
+        public static void ReturnPurchase() { }
+        public static void ShowSaleByDate()
+        {
+            try
+            {
+                Console.WriteLine("Enter minDate for search (MM/dd/yyyy):");
+                DateTime minDate = DateTime.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter maxDate for search (MM/dd/yyyy):");
+                DateTime maxDate = DateTime.Parse(Console.ReadLine());
+
+
+                var foundSale = marketable.ShowSalesByDate(minDate, maxDate);
+
+                if (foundSale.Count == 0)
+                {
+                    Console.WriteLine("Not found!");
+                }
+                var table = new ConsoleTable("ID", "Price", "Date", "Quantity", "Category");
+
+                foreach (var sale in foundSale)
+                {
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
+                        break;
+                    }
+
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error! {ex.Message}");
+            }
+        }
+        public static void ShowSaleByPriceRange()
+        {
+            try
+            {
+                
+                Console.WriteLine("Enter minimum price for searching products:");
+                int minPrice = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter maximum price for searching products:");
+                int maxPrice = int.Parse(Console.ReadLine());
+
+                var salePriceRange = marketable.ShowSaleByPriceRange(minPrice, maxPrice);
+                if (salePriceRange.Count == 0)
+                {
+                    Console.WriteLine("No sales found!");
+                }
+
+                var table = new ConsoleTable("ID", "Price", "Date", "Quantity", "Category");
+
+                foreach (var sale in salePriceRange)
+                {
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
+                        break;
+                    }
+
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! {ex.Message}");
+            }
+        }
+        public static void ShowSalesInGivenOneDate()
+        {
+            try
+            {
+                 
+                Console.WriteLine("Add that date to see sales on given date: MM/dd/yyyy");
+                DateTime dateTime = DateTime.Parse(Console.ReadLine());
+
+                var saletime = marketable.ShowSalesInGivenOneDate(dateTime);
+               
+                if (saletime.Count == 0)
+                {
+                    Console.WriteLine("No sales found!");
+                }
+
+                var table = new ConsoleTable("ID", "Price", "Date", "Quantity", "Category");
+
+                foreach (var sale in saletime)
+                {
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
+                        break;
+                    }
+
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error! {ex.Message}");
+            }
+        }
+        public static void ShowSalesByID()
+        {
+            try
+            {
+                Console.WriteLine("Please add sale ID for showing all information about ID:");
+                int saleID = Convert.ToInt32(Console.ReadLine());
+
+                var secondSaleID = marketable.ShowSalesByID(saleID);
+                if (secondSaleID.Count == 0)
+                {
+                    Console.WriteLine("No sales found!");
+                }
+
+                var table = new ConsoleTable("ID", "Product Name", "Price", "Date", "Quantity","ItemID", "Category");
+
+                foreach (var sale in secondSaleID)
+                {
+                    foreach (var item in sale.Items)
+                    {
+                        table.AddRow(sale.ID, item.SalesProduct.Name, sale.Price, sale.DateTime, item.Quantity,item.ID, item.SalesProduct.Category);
+                        break;
+                    }
+
+                }
+                table.Write();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error!{ex.Message}");
+            }
+
+        }
+
     }
 
 

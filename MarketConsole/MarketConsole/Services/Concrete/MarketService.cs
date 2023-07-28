@@ -30,6 +30,10 @@ namespace MarketConsole.Services.Concrete
             
             return sales;
         }
+        public List<SaleItem> GetItem()
+        {
+            return saleItems;
+        }
 
         public MarketService()
         {
@@ -102,22 +106,29 @@ namespace MarketConsole.Services.Concrete
         }
 
         public void ShowSale() { }
-        public void AddNewSale(int id , int counts, DateTime dateTime)
+        
+        public void AddNewSale(int id , int quantity, DateTime dateTime)
         {
             var product = products.Find(x => x.ID == id);
             List<SaleItem> tempItems = new();
 
-            if (counts < 0) throw new Exception("Count can't be less than 0!");
+            if (quantity < 0) throw new Exception("Count can't be less than 0!");
 
-            if (product != null && product.Counts >= counts) //We call to the information contained in the product
+            if (product != null && product.Counts >= quantity) //We call to the information contained in the product
             {
                 
-                var price = product.Price * counts; //when we write count this variable calculated price according to count
-                product.Counts -= counts;
-                var saleItem = new SaleItem(product, counts);
+                var price = product.Price * quantity; //when we write count this variable calculated price according to count
+                product.Counts -= quantity;
+                var saleItem = new SaleItem(product, quantity);
                 tempItems.Add(saleItem);
-                
-                var sale = new Sale(price, counts, DateTime.Now);
+                var sale = new Sale(price, quantity, DateTime.Now);
+                foreach (var res in tempItems)
+                {
+                    sale.AddSaleItem(res);
+                    
+                }
+                sales.Add(sale);
+
                 int option;
                 do
                 {
@@ -138,15 +149,23 @@ namespace MarketConsole.Services.Concrete
                             int salesID = int.Parse(Console.ReadLine());
 
                             Console.WriteLine("Enter the counts:");
-                            int countSale = int.Parse(Console.ReadLine());
+                            int secondCount = int.Parse(Console.ReadLine());
 
-                            var newProduct = products.Find(x => x.ID == salesID);
+                            var newProduct = products.Find(x => x.ID == salesID); // Finding Id when we input from user for adding new sale. 
 
-                            var secondPrice = product.Price * countSale;
-                            newProduct.Counts -= countSale;
-                           var neSaleItem = new SaleItem(newProduct, countSale);
-                            tempItems.Add(neSaleItem);
-                            sale = new Sale(secondPrice, countSale, DateTime.Now);
+                            var secondPrice = product.Price * secondCount;
+                            newProduct.Counts -= secondCount;
+
+                            var newSaleItem = new SaleItem(newProduct, secondCount);
+                            tempItems.Add(newSaleItem);
+                            sale = new Sale(secondPrice, secondCount, DateTime.Now);
+                            foreach (var res in tempItems)
+                            {
+                                sale.AddSaleItem(res);
+
+                            }
+                            sales.Add(sale);
+                            
                             break;
                         case 2:
                             return;
@@ -154,19 +173,60 @@ namespace MarketConsole.Services.Concrete
                             Console.WriteLine("No such option!");
                             break;
                     }
-                    foreach (var res in tempItems)
-                    {
-                        sale.AddSaleItem(res);
-                    }
-                    sales.Add(sale);
+                    
+                    //foreach (var res in tempItems)
+                    //{
+                    //    sale.AddSaleItem(res);
+
+                    //}
+                    //sales.Add(sale);
 
                 } while (option != 2);
 
             }
         }
+        public void RemoveSale(int ID)
+        {
+            if (ID < 0) throw new Exception("ID can't be less than 0!");
+            var existingID= sales.Find(x => x.ID == ID);
+
+            if (existingID == null) throw new Exception("Not Found!");
+
+            sales = sales.Where(p =>p.ID != ID).ToList();
+
+        }
+        public void ReturnPurchase() { }
+        public List<Sale> ShowSalesByDate(DateTime minDate, DateTime maxDate)
+        {
+            if (minDate > maxDate) throw new Exception("Min date can't be more than Max date!");
+
+            return sales.Where(x => x.DateTime >= minDate && x.DateTime <= maxDate).ToList();
+        }
+        public List<Sale> ShowSaleByPriceRange(int minPrice, int maxPrice)
+        {
+            if (minPrice < 0) throw new Exception("Minimum price can't less than 0");
+            if (minPrice > maxPrice) throw new Exception("Minimum price can't be more than maximum price!");
+            
+
+            return sales.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
+        }
+        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime)
+        {
+            if (dateTime == null) throw new Exception("Date is not found!");
+
+            return sales.Where(x => x.DateTime ==dateTime).ToList();
+        }
+        public List<Sale> ShowSalesByID(int ID)
+        {
+            if (ID < 0) throw new Exception("ID can't be less than 0!");
+            var existingID = sales.Find(x => x.ID == ID);
+
+            if (existingID == null) throw new Exception("Not Found!");
+
+            return  sales.Where(p => p.ID == ID).ToList();
+        }
 
 
-        
     }
    
 }

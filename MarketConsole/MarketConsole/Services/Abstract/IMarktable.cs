@@ -12,7 +12,7 @@ namespace MarketConsole.Services.Abstract
     {
         public List<Product> GetProducts();
         public void ShowProducts() { }
-        public int AddProduct (string name,decimal price, ProductCategory category,int count);
+        public int AddProduct (string name, decimal price, ProductCategory category, int counts);
         public void DeleteProduct (int ID);
         public void UpdateProduct(int ID, string name, decimal price, ProductCategory category, int counts);
         public List<Product> ShowCategoryByProduct(ProductCategory category);
@@ -21,7 +21,13 @@ namespace MarketConsole.Services.Abstract
 
         public List<Sale> GetSale();
         public void ShowSale() { }
-        public void AddNewSale(int id, int count, DateTime dateTime);
+        public void AddNewSale(int id, int quantity, DateTime dateTime);
+        public static void RemoveSale(int ID) { }
+        public void ReturnPurchase() { }
+        public static void ShowSaleByPriceRange(int minPrice, int maxPrice) { }
+        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime);
+        public List<Sale> ShowSalesByID(int ID);
+        
 
     }
 }

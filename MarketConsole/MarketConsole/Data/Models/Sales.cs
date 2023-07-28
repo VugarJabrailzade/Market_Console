@@ -1,6 +1,7 @@
 ﻿using MarketConsole.Data.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace MarketConsole.Data.Models
     public class Sale : BaseEntity
     {
         private static int count = 0;
-        public Sale(decimal price, int quantity, DateTime dateTime) 
+        public Sale(decimal price, int quantity, DateTime dateTime)
         {
             Price = price;
             Items = new List<SaleItem>();
@@ -40,6 +41,7 @@ namespace MarketConsole.Data.Models
         {
             Items.Add(saleItem);
         }
+       
 
     }
    
@@ -54,13 +56,13 @@ namespace MarketConsole.Data.Models
         {
             SalesProduct = product;
             Quantity = quantity;
-            
-
-
+          
             ID = count;
             count++;
         }
+        
     }
+    
 }
 
 

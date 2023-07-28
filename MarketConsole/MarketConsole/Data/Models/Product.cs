@@ -34,6 +34,7 @@ namespace MarketConsole.Data.Models
             Counts = counts;
             ID = iD;
 
+
         }
     }
 
