@@ -14,7 +14,7 @@ namespace MarketConsole.Services.Concrete
     public class MenuService : BaseEntity
     {
         private static MarketService marketable = new MarketService();
-        //private static object table;
+        
 
         public static void ShowProducts()
         {
@@ -287,7 +287,29 @@ namespace MarketConsole.Services.Concrete
             }
         }
 
-        public static void ReturnPurchase() { }
+        public static void ReturnPurchase() 
+        {
+            try
+            {
+                
+                Console.WriteLine("Please enter ID for checking:");
+                int saleID = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Please product ID for checking:");
+                int productID = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Please quantity for checking:");
+                int quantity = Convert.ToInt32(Console.ReadLine());
+
+                marketable.ReturnPurchase(saleID, productID, quantity);
+
+               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error!{ex.Message}");
+            }
+        }
         public static void ShowSaleByDate()
         {
             try

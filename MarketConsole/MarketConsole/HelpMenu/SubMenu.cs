@@ -114,7 +114,8 @@ namespace MarketManagement.HelpMenu
                     case 3:
                         MenuService.RemoveSale();
                         break;
-                    case 4:MenuService.ReturnPurchase();
+                    case 4:
+                        MenuService.ReturnPurchase();
                         break;
                     case 5:
                         MenuService.ShowSaleByDate();

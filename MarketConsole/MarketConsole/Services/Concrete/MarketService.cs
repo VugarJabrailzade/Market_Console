@@ -173,12 +173,12 @@ namespace MarketConsole.Services.Concrete
                             Console.WriteLine("No such option!");
                             break;
                     }
-                    
-                    //foreach (var res in tempItems)
-                    //{
-                    //    sale.AddSaleItem(res);
 
-                    //}
+                    foreach (var res in tempItems)
+                    {
+                        sale.AddSaleItem(res);
+
+                    }
                     //sales.Add(sale);
 
                 } while (option != 2);
@@ -202,7 +202,28 @@ namespace MarketConsole.Services.Concrete
             sales.RemoveAt(saleFind);
 
         }
-        public void ReturnPurchase() { }
+        public void ReturnPurchase(int ID, int productID,int quantity) 
+        {
+            Sale sale = sales.Find(x=> x.ID == ID);
+            if (sale == null) throw new ArgumentNullException("Sale can't be null!");
+
+            var saleItem = sale.Items.Find(x => x.SalesProduct.ID == productID);
+            if (saleItem == null) throw new ArgumentNullException("Product not found in sale!");
+
+            if (quantity > saleItem.Quantity) throw new Exception("Quantity function invalid!");
+            
+            var product = products.Find(x => x.ID== productID);
+            if (product == null) throw new ArgumentNullException("Product not found in sale!");
+
+            product.Counts += quantity; // we return sale product to product list
+            saleItem.Quantity -= quantity;
+
+            sale.Price -= product.Price * quantity; // sale.Price give us last price after return sale
+            sale.Quantity -= quantity;
+
+            Console.WriteLine("Return is succesfully!");
+
+        }
         public List<Sale> ShowSalesByDate(DateTime minDate, DateTime maxDate)
         {
             if (minDate > maxDate) throw new ArgumentException("Min date can't be more than Max date!");
@@ -216,7 +237,7 @@ namespace MarketConsole.Services.Concrete
             
             return sales.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
         }
-        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime) // give exact date for searching that day sales
+        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime) 
         {
             if (dateTime == null) throw new ArgumentNullException("Date is not found!");
 
