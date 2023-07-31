@@ -45,8 +45,8 @@ namespace MarketConsole.Services.Concrete
         public int AddProduct(string name, decimal price, ProductCategory category, int counts)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name is null!");
-            if (price < 0) throw new ArgumentOutOfRangeException("Price is negative!");
-            if (counts < 0) throw new ArgumentOutOfRangeException("Count can't be less than 0!");
+            if (price < 0) throw new Exception("Price is negative!");
+            if (counts < 0) throw new Exception("Count can't be less than 0!");
             
             var product = new Product(name, price, category, counts);
 
@@ -57,8 +57,8 @@ namespace MarketConsole.Services.Concrete
 
         public void DeleteProduct(int ID)
         {
-            if (ID < 0) throw new ArgumentOutOfRangeException("ID can't be negative!");
-            var existingproduct = products.FirstOrDefault(p => p.ID == ID);
+            if (ID < 0) throw new Exception("ID can't be negative!");
+            var existingproduct = products.FirstOrDefault(p => p.ID == ID); // return first element in product ID
 
             if (existingproduct == null) throw new ArgumentNullException("Not found!");
 
@@ -68,8 +68,8 @@ namespace MarketConsole.Services.Concrete
         public void UpdateProduct(int ID, string name, decimal price, ProductCategory category,int counts)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name is null!");
-            if (price < 0) throw new ArgumentOutOfRangeException("Price is negative!");
-            if (counts < 0) throw new ArgumentNullException("Counts can't be negative!");
+            if (price < 0) throw new Exception("Price is negative!");
+            if (counts < 0) throw new Exception("Counts can't be negative!");
 
             var existingproduct = products.FirstOrDefault(p => p.ID == ID);
             if (existingproduct == null) throw new Exception("Student not found!");
@@ -78,10 +78,10 @@ namespace MarketConsole.Services.Concrete
             existingproduct.Price = price;
             existingproduct.Category = category;
             existingproduct.Counts = counts;
-
+            //to change the new parameters of the existing product
         }
 
-        public List<Product> ShowCategoryByProduct(ProductCategory category)
+        public List<Product> ShowCategoryByProduct(ProductCategory category) //showing product category when writing searchin for category by user
         {
             if(category == null ) throw new ArgumentNullException("Category can't be null!");
             
@@ -101,7 +101,7 @@ namespace MarketConsole.Services.Concrete
         {
             if ( minPrice < 0) throw new Exception("Minimum price can't less than 0");
             if (minPrice > maxPrice) throw new Exception("Minimum price can't be more than maximum price!");
-
+            //givin minimum price and maximum price by user and shows the product according to the price range
             return products.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
         }
 
@@ -185,20 +185,27 @@ namespace MarketConsole.Services.Concrete
 
             }
         }
-        public void RemoveSale(int ID)
+        public void RemoveSale(int saleID)
         {
-            if (ID < 0) throw new Exception("ID can't be less than 0!");
-            var existingID= sales.Find(x => x.ID == ID);
+            if (saleID < 0) throw new ArgumentException("ID can't be less than 0!");
 
-            if (existingID == null) throw new Exception("Not Found!");
+            var saleFind = sales.FindIndex(x => x.ID == saleID);
+            if (saleFind == -1) throw new Exception("Sale not found!");
 
-            sales = sales.Where(p =>p.ID != ID).ToList();
+            var removeSale = sales[saleFind];
+
+            foreach (var res in removeSale.Items) // remove sale by given user id and we return deleting product count to back
+            {
+                var product = products.Find(x => x.ID == res.SalesProduct.ID);
+                product.Counts += res.Quantity;
+            }
+            sales.RemoveAt(saleFind);
 
         }
         public void ReturnPurchase() { }
         public List<Sale> ShowSalesByDate(DateTime minDate, DateTime maxDate)
         {
-            if (minDate > maxDate) throw new Exception("Min date can't be more than Max date!");
+            if (minDate > maxDate) throw new ArgumentException("Min date can't be more than Max date!");
 
             return sales.Where(x => x.DateTime >= minDate && x.DateTime <= maxDate).ToList();
         }
@@ -207,23 +214,22 @@ namespace MarketConsole.Services.Concrete
             if (minPrice < 0) throw new Exception("Minimum price can't less than 0");
             if (minPrice > maxPrice) throw new Exception("Minimum price can't be more than maximum price!");
             
-
             return sales.Where(x => x.Price >= minPrice && x.Price <= maxPrice).ToList();
         }
-        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime)
+        public List<Sale> ShowSalesInGivenOneDate(DateTime dateTime) // give exact date for searching that day sales
         {
-            if (dateTime == null) throw new Exception("Date is not found!");
+            if (dateTime == null) throw new ArgumentNullException("Date is not found!");
 
-            return sales.Where(x => x.DateTime ==dateTime).ToList();
+            return sales.Where(x => x.DateTime.Date ==dateTime.Date).ToList(); // .Date giving us only date(MM/dd/yyyy) from Datetime(hourse not searching)
         }
         public List<Sale> ShowSalesByID(int ID)
         {
             if (ID < 0) throw new Exception("ID can't be less than 0!");
-            var existingID = sales.Find(x => x.ID == ID);
+            var existingID = sales.Find(x => x.ID == ID); // finding sale ID with Find method
 
-            if (existingID == null) throw new Exception("Not Found!");
+            if (existingID == null) throw new ArgumentNullException("Not Found!");
 
-            return  sales.Where(p => p.ID == ID).ToList();
+            return  sales.Where(p => p.ID == ID).ToList(); // show all information about sales by take sale ID
         }
 
 

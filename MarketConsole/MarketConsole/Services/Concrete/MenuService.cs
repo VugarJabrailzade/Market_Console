@@ -133,10 +133,16 @@ namespace MarketConsole.Services.Concrete
 
                 var res = marketable.ShowCategoryByProduct((ProductCategory)Enum.Parse(typeof(ProductCategory), categoryName, true)).ToList(); //this method calls  enums which products save inside enum categories
 
-                foreach (var item in res)
+                var table = new ConsoleTable("ID", "Name", "Price", "Category", "Count");
+
+                foreach (var product in res)
                 {
-                    Console.WriteLine($"ID: {item.ID} | Name: {item.Name} | Price: {item.Price} | Category: {item.Category} | Count: {item.Counts}");
+                    
+                    table.AddRow(product.ID, product.Name, product.Price,product.Category, product.Counts);
+                    break;
+
                 }
+                table.Write();
             }
             catch (Exception ex)
             {
@@ -152,17 +158,21 @@ namespace MarketConsole.Services.Concrete
                 Console.WriteLine("Enter maximum price for searching products:");
                 int maxPrice = int.Parse(Console.ReadLine());
 
-                var priceRange = marketable.ShowProductByPriceRange(minPrice, maxPrice);
+                var priceRange = marketable.ShowProductByPriceRange(minPrice, maxPrice); // giving minimum and maximum price range for search
                 if (priceRange.Count == 0)
                 {
                     Console.WriteLine("No products found!");
                 }
+                var table = new ConsoleTable("ID", "Name", "Price", "Category", "Count");
 
-                foreach (var price in priceRange)
+                foreach (var product in priceRange)
                 {
-                    Console.WriteLine($"ID: {price.ID} | Name: {price.Name} | Price: {price.Price} | Category: {price.Category} | Count: {price.Counts}");
-                }
 
+                    table.AddRow(product.ID, product.Name, product.Price, product.Category, product.Counts);
+                    
+
+                }
+                table.Write();
 
             }
             catch (Exception ex)
@@ -184,11 +194,16 @@ namespace MarketConsole.Services.Concrete
                     Console.WriteLine("Product not found!");
                     return;
                 }
+                var table = new ConsoleTable("ID", "Name", "Price", "Category", "Count");
 
-                foreach (var item in searchName)
+                foreach (var product in searchName)
                 {
-                    Console.WriteLine($"ID: {item.ID} | Name: {item.Name} | Price: {item.Price} | Category: {item.Category} | Count: {item.Counts}");
+
+                    table.AddRow(product.ID, product.Name, product.Price, product.Category, product.Counts);
+
+
                 }
+                table.Write();
 
             }
             catch (Exception ex)
@@ -211,13 +226,13 @@ namespace MarketConsole.Services.Concrete
                     return;
                 }
 
-                var table = new ConsoleTable("ID", "Price", "Date", "Quantity","Category");
+                var table = new ConsoleTable("ID", "Price", "Name", "Category", "Quantity","Date");
 
                 foreach (var sale in sales)
                 {
                     foreach (var item in sale.Items)
                     {
-                        table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity,item.SalesProduct.Category);
+                        table.AddRow(sale.ID, sale.Price, item.SalesProduct.Name, item.SalesProduct.Category,sale.Quantity,sale.DateTime);
                         break;
                     }
                     
@@ -243,7 +258,7 @@ namespace MarketConsole.Services.Concrete
 
                 marketable.AddNewSale(salesID, counts, DateTime.Now);
 
-                Console.WriteLine($"Product has sold!");
+                Console.WriteLine($"Sale was implemented!");
                 
 
             }
@@ -365,7 +380,7 @@ namespace MarketConsole.Services.Concrete
                     foreach (var item in sale.Items)
                     {
                         table.AddRow(sale.ID, sale.Price, sale.DateTime, sale.Quantity, item.SalesProduct.Category);
-                        break;
+                        
                     }
 
                 }
