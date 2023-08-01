@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hRWFRs1o8lZkjNMF6+zFiL3J6i1fVpGpYrBLO0jtuZV807JniGUbfg16DahtwpNVTnrRNzZW6dCKbsFmrDDVFg==",
+  "dgSpecHash": "wi0P1O5UhZJ1XXrqxt1LWHIEk8gRNA+xX777Hh+UpJIH08qI8wK6j68wifrhNu5QgSEo7CINuIZ//yRWWSJsRA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
+  "projectFilePath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vcebr\\.nuget\\packages\\consoletables\\2.4.2\\consoletables.2.4.2.nupkg.sha512",
     "C:\\Users\\vcebr\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

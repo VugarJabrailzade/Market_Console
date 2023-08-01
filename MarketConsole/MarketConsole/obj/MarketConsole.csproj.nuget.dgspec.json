@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\MarketConsole.csproj": {}
+    "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\MarketConsole.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\MarketConsole.csproj": {
+    "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\MarketConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
+        "projectUniqueName": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
         "projectName": "MarketConsole",
-        "projectPath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
+        "projectPath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\MarketConsole.csproj",
         "packagesPath": "C:\\Users\\vcebr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console\\MarketConsole\\MarketConsole\\obj\\",
+        "outputPath": "C:\\Users\\vcebr\\OneDrive\\Desktop\\Market_Console(1ci versiya)\\MarketConsole\\MarketConsole\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

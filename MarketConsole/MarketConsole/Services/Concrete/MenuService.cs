@@ -257,6 +257,7 @@ namespace MarketConsole.Services.Concrete
                 int counts = int.Parse(Console.ReadLine());
 
                 marketable.AddNewSale(salesID, counts, DateTime.Now);
+               
 
                 Console.WriteLine($"Sale was implemented!");
                 

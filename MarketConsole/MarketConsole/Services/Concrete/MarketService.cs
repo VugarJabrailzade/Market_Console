@@ -47,6 +47,7 @@ namespace MarketConsole.Services.Concrete
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Name is null!");
             if (price < 0) throw new Exception("Price is negative!");
             if (counts < 0) throw new Exception("Count can't be less than 0!");
+            if(category== null) throw new Exception("Category can't be empty!");
             
             var product = new Product(name, price, category, counts);
 
@@ -107,82 +108,75 @@ namespace MarketConsole.Services.Concrete
 
         public void ShowSale() { }
         
-        public void AddNewSale(int id , int quantity, DateTime dateTime)
+        public void AddNewSale(int productid , int quantity, DateTime dateTime)
         {
-            var product = products.Find(x => x.ID == id);
-            List<SaleItem> tempItems = new();
+            List<SaleItem> tempItems = new List<SaleItem>();
 
-            if (quantity < 0) throw new Exception("Count can't be less than 0!");
+            int option;
 
-            if (product != null && product.Counts >= quantity) //We call to the information contained in the product
+            do
             {
-                
-                var price = product.Price * quantity; //when we write count this variable calculated price according to count
-                product.Counts -= quantity;
-                var saleItem = new SaleItem(product, quantity);
-                tempItems.Add(saleItem);
-                var sale = new Sale(price, quantity, DateTime.Now);
-                foreach (var res in tempItems)
+                var product = products.Find(p => p.ID == productid);                                
+
+                if (quantity <= 0)                                                                  
                 {
-                    sale.AddSaleItem(res);
-                    
+                    Console.WriteLine("Quantity must be greater than 0.");
                 }
-                sales.Add(sale);
-
-                int option;
-                do
+                else if (product == null)                                                           
                 {
-                    Console.WriteLine("Do u want to add one more sale item?");
-                    Console.WriteLine("1. Yes");
-                    Console.WriteLine("2. No");
+                    Console.WriteLine("Product not found.");
+                }
+                else if (product.Counts < quantity)                          
+                {
+                    Console.WriteLine("Not enough quantity in stock.");
+                }
+                else
+                {
+                    var price = product.Price * quantity;  // calculated price of sale                             
+                    product.Counts -= quantity;                                                  
 
-                    while (!int.TryParse(Console.ReadLine(), out option))
-                    {
-                        Console.WriteLine("Invalid option!");
-                        Console.WriteLine("Enter option again:");
-                    }
-                    switch (option)
-                    {
-                        case 1:
+                    var saleItem = new SaleItem(product, quantity); 
+                    tempItems.Add(saleItem);                            
 
-                            Console.WriteLine("Please add product ID for  sales");
-                            int salesID = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Product added to the sale.");
+                }
 
-                            Console.WriteLine("Enter the counts:");
-                            int secondCount = int.Parse(Console.ReadLine());
+                Console.WriteLine("Do you want to add one more product?");             
+                Console.WriteLine("1. Yes");
+                Console.WriteLine("2. No");
 
-                            var newProduct = products.Find(x => x.ID == salesID); // Finding Id when we input from user for adding new sale. 
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Please, enter a valid option:");
+                    Console.WriteLine("Enter option again");
+                }
 
-                            var secondPrice = product.Price * secondCount;
-                            newProduct.Counts -= secondCount;
+                if (option == 1)
+                {
+                    Console.WriteLine("Enter product id");
+                    productid = int.Parse(Console.ReadLine());
 
-                            var newSaleItem = new SaleItem(newProduct, secondCount);
-                            tempItems.Add(newSaleItem);
-                            sale = new Sale(secondPrice, secondCount, DateTime.Now);
-                            foreach (var res in tempItems)
-                            {
-                                sale.AddSaleItem(res);
+                    Console.WriteLine("Enter the quantity:");
+                    quantity = int.Parse(Console.ReadLine());
+                }
 
-                            }
-                            sales.Add(sale);
-                            
-                            break;
-                        case 2:
-                            return;
-                        default:
-                            Console.WriteLine("No such option!");
-                            break;
-                    }
+            } while (option == 1);
 
-                    foreach (var res in tempItems)
-                    {
-                        sale.AddSaleItem(res);
+            if (tempItems.Count > 0)   
+            {
+                decimal sum = tempItems.Sum(item => item.Quantity * item.SalesProduct.Price);  // sum of tempitems inside 
+                int totalQuantity = tempItems.Sum(item => item.Quantity);
 
-                    }
-                    //sales.Add(sale);
+                var sale = new Sale(sum, totalQuantity,DateTime.Now, tempItems);  
+                sales.Add(sale);           
 
-                } while (option != 2);
-
+                Console.WriteLine("_______________");
+                Console.WriteLine("Sale completed.");
+                Console.WriteLine("_______________");
+            }
+            else
+            {
+                Console.WriteLine("Sale canceled, no products added.");  
             }
         }
         public void RemoveSale(int saleID)
