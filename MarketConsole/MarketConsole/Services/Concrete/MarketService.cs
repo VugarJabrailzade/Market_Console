@@ -201,7 +201,7 @@ namespace MarketConsole.Services.Concrete
             Sale sale = sales.Find(x=> x.ID == ID);
             if (sale == null) throw new ArgumentNullException("Sale can't be null!");
 
-            var saleItem = sale.Items.Find(x => x.SalesProduct.ID == productID);
+            var saleItem = sale.Items.Find(x => x.SalesProduct.ID == productID); // finding sales product for ID
             if (saleItem == null) throw new ArgumentNullException("Product not found in sale!");
 
             if (quantity > saleItem.Quantity) throw new Exception("Quantity function invalid!");
